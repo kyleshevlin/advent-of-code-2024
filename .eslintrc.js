@@ -17,7 +17,7 @@ module.exports = {
   plugins: [],
   rules: {
     'no-fallthrough': 'off',
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'warn',
     'prefer-const': 'warn',
   },
 }
