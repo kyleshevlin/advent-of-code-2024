@@ -4,7 +4,11 @@ module.exports = {
     node: true,
     'vitest-globals/env': true,
   },
-  extends: ['eslint:recommended', 'prettier', 'plugin:vitest-globals/recommended'],
+  extends: [
+    'eslint:recommended',
+    'prettier',
+    'plugin:vitest-globals/recommended',
+  ],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
