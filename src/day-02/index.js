@@ -35,15 +35,7 @@ export function solution1(input) {
 // console.log(solution1(data)) // 202
 
 export function getRowPermutations(arr) {
-  const result = []
-
-  for (let i = 0; i < arr.length; i++) {
-    const permutation = [...arr.slice(0, i), ...arr.slice(i + 1)]
-
-    result.push(permutation)
-  }
-
-  return result
+  return arr.map((_, idx) => arr.toSpliced(idx, 1))
 }
 
 export function solution2(input) {
