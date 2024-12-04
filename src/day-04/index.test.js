@@ -1,9 +1,20 @@
 import { solution1, solution2 } from './'
 
-const input = ``
+const input = `
+MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX
+`
 
 test('solution1', () => {
-  expect(solution1(input)).toEqual()
+  expect(solution1(input)).toEqual(18)
 })
 
 test('solution2', () => {
