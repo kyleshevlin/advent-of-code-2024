@@ -84,4 +84,74 @@ export function solution1(input) {
 
 // console.log(solution1(data)) // 2557
 
-export function solution2(input) {}
+export function solution2(input) {
+  const search = formatInput(input)
+
+  let count = 0
+
+  for (let y = 0; y < search.length; y++) {
+    for (let x = 0; x < search[y].length; x++) {
+      if (search[y][x] === 'A') {
+        /**
+         * M . M
+         * . A .
+         * S . S
+         */
+        if (
+          safeGridGet(search, y - 1, x - 1) === 'M' &&
+          safeGridGet(search, y - 1, x + 1) === 'M' &&
+          safeGridGet(search, y + 1, x - 1) === 'S' &&
+          safeGridGet(search, y + 1, x + 1) === 'S'
+        ) {
+          count++
+        }
+
+        /**
+         * S . S
+         * . A .
+         * M . M
+         */
+        if (
+          safeGridGet(search, y - 1, x - 1) === 'S' &&
+          safeGridGet(search, y - 1, x + 1) === 'S' &&
+          safeGridGet(search, y + 1, x - 1) === 'M' &&
+          safeGridGet(search, y + 1, x + 1) === 'M'
+        ) {
+          count++
+        }
+
+        /**
+         * S . M
+         * . A .
+         * S . M
+         */
+        if (
+          safeGridGet(search, y - 1, x - 1) === 'S' &&
+          safeGridGet(search, y - 1, x + 1) === 'M' &&
+          safeGridGet(search, y + 1, x - 1) === 'S' &&
+          safeGridGet(search, y + 1, x + 1) === 'M'
+        ) {
+          count++
+        }
+
+        /**
+         * M . S
+         * . A .
+         * M . S
+         */
+        if (
+          safeGridGet(search, y - 1, x - 1) === 'M' &&
+          safeGridGet(search, y - 1, x + 1) === 'S' &&
+          safeGridGet(search, y + 1, x - 1) === 'M' &&
+          safeGridGet(search, y + 1, x + 1) === 'S'
+        ) {
+          count++
+        }
+      }
+    }
+  }
+
+  return count
+}
+
+// console.log(solution2(data)) // 1854
