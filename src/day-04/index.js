@@ -68,7 +68,6 @@ export function solution1(input) {
         }
 
         // up-to-the-right
-        // up-to-the-left
         if (
           safeGridGet(search, y - 1, x + 1) === 'M' &&
           safeGridGet(search, y - 2, x + 2) === 'A' &&
