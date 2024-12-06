@@ -12,7 +12,13 @@ Hope you enjoy!
 
 Here's my process for solving the problems
 
-- Copy/paste the input text you get from the puzzle into that day's `input.txt` file. So for Day 1, you put it in `src/day-01/input.txt`
+- Create an `input.txt` file in that day's directory. For example: if you're working on Day 1, you would run:
+
+```
+touch src/day-01/input.txt
+```
+
+- Then, copy and paste the input text you receive from Advent of Code into that file. This file is **not** tracked by `git`. Advent of Code asks that we not commit input files.
 - The problem generally gives you an example of the input and the expected output, use these to write tests in that day's `index.test.js` file.
 - Write the code in that day's `index.js` file.
 - To run the tests, use `npm` or `yarn` to run the `test` script found in the `package.json`. Do this in a terminal that can run Node.
