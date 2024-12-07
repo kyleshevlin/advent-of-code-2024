@@ -23,11 +23,7 @@ function getCombos(equation, operators) {
   const [first, ...rest] = nums
 
   const combos = rest.reduce(
-    (acc, num) => {
-      return acc.flatMap(eq => {
-        return operators.map(op => [...eq, op, num])
-      })
-    },
+    (acc, num) => acc.flatMap(eq => operators.map(op => [...eq, op, num])),
     [[first]]
   )
 
