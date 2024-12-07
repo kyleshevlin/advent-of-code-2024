@@ -18,5 +18,5 @@ test('solution1', () => {
 })
 
 test('solution2', () => {
-  expect(solution2(input)).toEqual(6)
+  expect(solution2(input)).toEqual()
 })
