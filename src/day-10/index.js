@@ -33,7 +33,7 @@ function getTrailScore(trailhead, grid) {
   let score = 0
   const visited = new Set()
 
-  function recurse(point, level) {
+  function walk(point, level) {
     const key = point.join(',')
 
     if (visited.has(key)) return
@@ -54,12 +54,12 @@ function getTrailScore(trailhead, grid) {
       const nextLevel = safeGridGet(grid, nextRow, nextCol)
 
       if (nextLevel === level + 1) {
-        recurse([nextRow, nextCol], nextLevel)
+        walk([nextRow, nextCol], nextLevel)
       }
     }
   }
 
-  recurse(trailhead, 0)
+  walk(trailhead, 0)
 
   return score
 }
@@ -78,7 +78,7 @@ function getTrailRating(trailhead, grid) {
   let score = 0
   const visited = new Set()
 
-  function recurse(path, level) {
+  function walk(path, level) {
     if (visited.has(path)) return
 
     visited.add(path)
@@ -98,12 +98,12 @@ function getTrailRating(trailhead, grid) {
       const nextLevel = safeGridGet(grid, nextRow, nextCol)
 
       if (nextLevel === level + 1) {
-        recurse(path + `-${nextRow},${nextCol}`, nextLevel)
+        walk(path + `-${nextRow},${nextCol}`, nextLevel)
       }
     }
   }
 
-  recurse(trailhead.join(','), 0)
+  walk(trailhead.join(','), 0)
 
   return score
 }
