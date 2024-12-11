@@ -31,7 +31,7 @@ function simulation(stone, ticks) {
 
   const nextStones = transform(stone)
   const result = nextStones.reduce(
-    (acc, _stone) => acc + simulation(_stone, ticks - 1),
+    (acc, nextStone) => acc + simulation(nextStone, ticks - 1),
     0
   )
 
