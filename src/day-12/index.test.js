@@ -60,49 +60,29 @@ test('solution2', () => {
 })
 
 test('getPerimeter', () => {
-  expect(getPerimeter({ positions: [[0, 0]] })).toEqual(4)
+  expect(getPerimeter({ cells: new Set(['0,0']) })).toEqual(4)
   expect(
     getPerimeter({
-      positions: [
-        [0, 0],
-        [0, 1],
-      ],
+      cells: new Set(['0,0', '0,1']),
     })
   ).toEqual(6)
   expect(
     getPerimeter({
-      positions: [
-        [0, 0],
-        [0, 1],
-        [0, 2],
-        [1, 0],
-        [1, 2],
-        [2, 0],
-        [2, 1],
-        [2, 2],
-      ],
+      cells: new Set(['0,0', '0,1', '0,2', '1,0', '1,2', '2,0', '2,1', '2,2']),
     })
   ).toEqual(16)
 })
 
 test('getSides', () => {
-  expect(getSides({ positions: [[0, 0]] })).toEqual(4)
+  expect(getSides({ cells: new Set(['0,0']) })).toEqual(4)
   expect(
     getSides({
-      positions: [
-        [0, 0],
-        [0, 1],
-      ],
+      cells: new Set(['0,0', '0,1']),
     })
   ).toEqual(4)
   expect(
     getSides({
-      positions: [
-        [0, 0],
-        [1, 0],
-        [1, 1],
-        [2, 1],
-      ],
+      cells: new Set(['0,0', '1,0', '1,1', '2,1']),
     })
   ).toEqual(8)
 })

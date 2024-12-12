@@ -21,7 +21,7 @@ function getRegions(grid) {
     }
   }
 
-  function walk(row, col, char, positions) {
+  function walk(row, col, char, cells) {
     for (const [dy, dx] of NEXT_DIRS) {
       const nextChar = safeGridGet(grid, row + dy, col + dx)
       const nextRow = row + dy
@@ -29,9 +29,9 @@ function getRegions(grid) {
       const key = `${nextRow},${nextCol}`
 
       if (nextChar && nextChar === char && cellsRemaining.has(key)) {
-        positions.push([nextRow, nextCol])
+        cells.add(`${nextRow},${nextCol}`)
         cellsRemaining.delete(key)
-        walk(nextRow, nextCol, char, positions)
+        walk(nextRow, nextCol, char, cells)
       }
     }
   }
@@ -42,34 +42,34 @@ function getRegions(grid) {
 
     const [row, col] = cell.split(',').map(Number)
     const char = grid[row][col]
-    const positions = [[row, col]]
+    const cells = new Set([`${row},${col}`])
 
-    walk(row, col, char, positions)
+    walk(row, col, char, cells)
 
-    regions.push({ char, positions })
+    regions.push({ char, cells })
   }
 
   return regions
 }
 
 function getArea(region) {
-  return region.positions.length
+  return region.cells.size
 }
 
 export function getPerimeter(region) {
-  const { positions } = region
-  const positionSet = new Set(positions.map(([r, c]) => `${r},${c}`))
+  const { cells } = region
   let result = 0
 
-  for (const [row, col] of positions) {
+  for (const key of cells) {
+    const [row, col] = key.split(',').map(Number)
     let sides = 4
 
     for (const [dy, dx] of NEXT_DIRS) {
       const nextRow = row + dy
       const nextCol = col + dx
-      const key = `${nextRow},${nextCol}`
+      const nextKey = `${nextRow},${nextCol}`
 
-      if (positionSet.has(key)) sides--
+      if (cells.has(nextKey)) sides--
     }
 
     result += sides
@@ -93,11 +93,11 @@ export function solution1(input) {
 // console.log(solution1(data)) // 1533644
 
 export function getSides(region) {
-  const { positions } = region
-  const positionSet = new Set(positions.map(([r, c]) => `${r},${c}`))
+  const { cells } = region
   let result = 0
 
-  for (const [row, col] of positions) {
+  for (const key of cells) {
+    const [row, col] = key.split(',').map(Number)
     let corners = 0
 
     const n = `${row - 1},${col}`
@@ -111,32 +111,32 @@ export function getSides(region) {
 
     // NE Corner
     if (
-      (!positionSet.has(n) && !positionSet.has(e)) ||
-      (positionSet.has(n) && positionSet.has(e) && !positionSet.has(ne))
+      (!cells.has(n) && !cells.has(e)) ||
+      (cells.has(n) && cells.has(e) && !cells.has(ne))
     ) {
       corners++
     }
 
     // SE Corner
     if (
-      (!positionSet.has(s) && !positionSet.has(e)) ||
-      (positionSet.has(s) && positionSet.has(e) && !positionSet.has(se))
+      (!cells.has(s) && !cells.has(e)) ||
+      (cells.has(s) && cells.has(e) && !cells.has(se))
     ) {
       corners++
     }
 
     // SW Corner
     if (
-      (!positionSet.has(s) && !positionSet.has(w)) ||
-      (positionSet.has(s) && positionSet.has(w) && !positionSet.has(sw))
+      (!cells.has(s) && !cells.has(w)) ||
+      (cells.has(s) && cells.has(w) && !cells.has(sw))
     ) {
       corners++
     }
 
     // NW Corner
     if (
-      (!positionSet.has(n) && !positionSet.has(w)) ||
-      (positionSet.has(n) && positionSet.has(w) && !positionSet.has(nw))
+      (!cells.has(n) && !cells.has(w)) ||
+      (cells.has(n) && cells.has(w) && !cells.has(nw))
     ) {
       corners++
     }
