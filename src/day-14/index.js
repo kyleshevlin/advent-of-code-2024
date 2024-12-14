@@ -15,7 +15,7 @@ function makeRobot(robotStr) {
   return { p: { x: px, y: py }, v: { x: vx, y: vy } }
 }
 
-export function advanceRobot(robot, rows, cols) {
+export function moveRobot(robot, rows, cols) {
   const { p, v } = robot
 
   let nextPx = p.x + v.x
@@ -40,41 +40,40 @@ export function solution1(input, rows, cols) {
   let i = 0
   let statefulBots = [...robots]
   while (i < 100) {
-    statefulBots = statefulBots.map(robot => advanceRobot(robot, rows, cols))
     i++
+    statefulBots = statefulBots.map(robot => moveRobot(robot, rows, cols))
   }
 
   const xMid = Math.floor(cols / 2)
   const yMid = Math.floor(rows / 2)
 
-  const nw = []
-  const ne = []
-  const sw = []
-  const se = []
+  let nw = 0
+  let ne = 0
+  let sw = 0
+  let se = 0
 
   for (const bot of statefulBots) {
     if (bot.p.x < xMid && bot.p.y < yMid) {
-      nw.push(bot)
+      nw++
       continue
     }
 
     if (bot.p.x > xMid && bot.p.y < yMid) {
-      ne.push(bot)
+      ne++
       continue
     }
 
     if (bot.p.x < xMid && bot.p.y > yMid) {
-      sw.push(bot)
+      sw++
       continue
     }
 
     if (bot.p.x > xMid && bot.p.y > yMid) {
-      se.push(bot)
-      continue
+      se++
     }
   }
 
-  return nw.length * ne.length * sw.length * se.length
+  return nw * ne * sw * se
 }
 
 // console.log(solution1(data, 103, 101)) // 221616000
@@ -97,7 +96,7 @@ export function solution2(input, rows, cols) {
 
   do {
     i++
-    statefulBots = statefulBots.map(robot => advanceRobot(robot, rows, cols))
+    statefulBots = statefulBots.map(robot => moveRobot(robot, rows, cols))
     positionSet = new Set(statefulBots.map(bot => `${bot.p.x},${bot.p.y}`))
 
     // No overlap would mean the sizes are the same
