@@ -30,32 +30,19 @@ function parseGame(gameStr) {
   return { a, b, prize }
 }
 
-function solveGame(game) {
+function solveGame(game, limit) {
   const { a, b, prize } = game
 
   // determine if X can be solved
-  const maxAPresses = Math.ceil(prize.x / a.x)
-  const maxBPresses = Math.ceil(prize.x / b.x)
+  const maxAPresses = Math.min(Math.ceil(prize.x / a.x), limit)
+  const maxBPresses = Math.min(Math.ceil(prize.x / b.x), limit)
 
   const aTable = {}
   for (let i = 0; i < maxAPresses; i++) {
     aTable[i * a.x] = i
   }
 
-  const bTable = {}
-  for (let i = 0; i < maxBPresses; i++) {
-    bTable[i * b.x] = i
-  }
-
   const potentialSolutions = []
-
-  for (let i = 0; i < maxAPresses; i++) {
-    const key = prize.x - a.x * i
-
-    if (bTable[key]) {
-      potentialSolutions.push({ aPresses: i, bPresses: bTable[key] })
-    }
-  }
 
   for (let i = 0; i < maxBPresses; i++) {
     const key = prize.x - b.x * i
@@ -83,7 +70,7 @@ function solveGame(game) {
 
 export function solution1(input) {
   const games = formatInput(input)
-  const solves = games.map(solveGame)
+  const solves = games.map(game => solveGame(game, 100))
   const costs = solves.map(sol => {
     if (!sol) return 0
 
@@ -95,4 +82,23 @@ export function solution1(input) {
 
 // console.log(solution1(data)) // 36954
 
-export function solution2(input) {}
+export function solution2(input) {
+  const games = formatInput(input)
+  const modGames = games.map(game => ({
+    ...game,
+    prize: {
+      x: game.prize.x + 10000000000000,
+      y: game.prize.y + 10000000000000,
+    },
+  }))
+  // const solves = modGames.map(game => solveGame(game, Infinity))
+  // const costs = solves.map(sol => {
+  //   if (!sol) return 0
+
+  //   return sol.aPresses * 3 + sol.bPresses
+  // })
+
+  // return sum(costs)
+}
+
+// console.log(solution2(data))
