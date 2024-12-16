@@ -91,4 +91,64 @@ export function solution1(input) {
 
 // console.log(solution1(data)) // 1511865
 
-export function solution2(input) {}
+const LEFT_BOX = '['
+const RIGHT_BOX = ']'
+
+export function solution2(input) {
+  const { grid, moves } = formatInput(input)
+  const modGrid = grid.map(row =>
+    row.flatMap(char => {
+      switch (char) {
+        case EMPTY:
+          return [EMPTY, EMPTY]
+        case WALL:
+          return [WALL, WALL]
+        case BOX:
+          return [LEFT_BOX, RIGHT_BOX]
+        case BOT:
+          return [BOT, EMPTY]
+      }
+    })
+  )
+
+  for (let i = 0; i < 1; i++) {
+    const move = moves[i]
+    console.log(move)
+    const [dRow, dCol] = MOVE_TO_COORDS[move]
+
+    const botRow = grid.findIndex(row => row.includes(BOT))
+    const botCol = grid[botRow].indexOf(BOT)
+
+    const nextRow = botRow + dRow
+    const nextCol = botCol + dCol
+
+    const nextChar = safeGridGet(grid, nextRow, nextCol)
+
+    if (nextChar === WALL) {
+      continue
+    }
+
+    if (nextChar === EMPTY) {
+      grid[botRow][botCol] = EMPTY
+      grid[nextRow][nextCol] = BOT
+      continue
+    }
+
+    if (nextChar === LEFT_BOX || nextChar === RIGHT_BOX) {
+      // TODO
+    }
+  }
+
+  console.log(modGrid.map(row => row.join('')).join('\n'))
+
+  //   const scores = []
+  //   for (let r = 0; r < grid.length; r++) {
+  //     for (let c = 0; c < grid[r].length; c++) {
+  //       if (grid[r][c] === BOX) {
+  //         scores.push(r * 100 + c)
+  //       }
+  //     }
+  //   }
+
+  //   return sum(scores)
+}
